@@ -11,7 +11,7 @@ module Railspack
     desc "generate", "Generate all webpack files"
     def generate
       copy_file("index.js", "frontend/index.js")
-      copy_file("registerComponent.js", "frontend/registerComponent")
+      copy_file("registerComponent.js", "frontend/registerComponent.js")
       copy_file("react_helper.rb", "app/helpers/react_helper.rb")
       copy_file("package.json", "package.json")
       copy_file("babelrc.js", ".babelrc")
