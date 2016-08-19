@@ -1,0 +1,29 @@
+{
+  "name": "[Enter Your App Name]",
+  "version": "1.0.0",
+  "description": "[Enter App Description]",
+  "main": "index.js",
+  "author": "[Enter Author Name]",
+  "scripts": {
+    "start-dev": "webpack -wc --config webpack.config.babel.js",
+    "postinstall": "webpack --config webpack.config.babel.js"
+  },
+  "dependencies": {
+    "babel-core": "latest",
+    "babel-loader": "latest",
+    "babel-preset-es2015": "latest",
+    "babel-preset-react": "latest",
+    "babel-preset-stage-0": "latest",
+    "classnames": "latest",
+    "lodash": "latest",
+    "moment": "latest",
+    "react": "latest",
+    "react-addons-css-transition-group": "latest",
+    "react-dom": "latest",
+    "react-input-slider": "latest",
+    "webpack": "latest"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "latest"
+  }
+}
