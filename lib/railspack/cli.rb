@@ -2,6 +2,8 @@ require 'thor'
 require 'erubis'
 require 'pathname'
 
+require 'railspack/template_helper'
+
 module Railspack
   class CLI < Thor
     include Thor::Actions
@@ -11,11 +13,9 @@ module Railspack
     end
 
     desc "generate", "Generate all webpack files"
+    method_option :install, aliases: '-i', desc: 'Run npm install after generating files'
     def generate
-      if !npm_available?
-        puts "NPM not installed"
-        return
-      end
+      run_npm_install = options[:install]
 
       build_package_json
       copy_file("index.js", "frontend/index.js")
@@ -24,8 +24,16 @@ module Railspack
       copy_file("babelrc.js", ".babelrc")
       copy_file("webpack.js", "webpack.config.babel.js")
 
-      puts "Running `npm install`"
-      exec("npm install")
+      if run_npm_install
+        unless npm_available?
+          puts "NPM is not installed, please install and then run `npm install` manually"
+          return
+        end
+
+        puts "Running `npm install`"
+        exec("npm install")
+      end
+
     end
 
     private
@@ -44,23 +52,12 @@ module Railspack
       directory_path.basename
     end
 
-    def get_template_from_file(template_name)
-      template_path = File.join(File.dirname(__FILE__), 'templates', template_name)
-      file = File.open(template_path, "rb")
-      contents = file.read
-    end
-
-    def render_template(template_name, locals)
-      contents = get_template_from_file(template_name)
-      Erubis::Eruby.new(contents).result(locals)
-    end
-
     def build_package_json
       project_name = get_project_name
       author_name = get_git_username
 
       locals = { application_name: project_name, author_name: author_name }
-      contents = render_template('package.json.erb', locals)
+      contents = TemplateHelper.render('package.json.erb', locals)
       create_file('package.json', contents)
     end
   end

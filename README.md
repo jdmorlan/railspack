@@ -28,6 +28,19 @@ Make sure that you run `npm install` after running the `railspack generate`
 command. This will install all the dependencies defined in the `package.json`
 file.
 
+If you would like `npm install` to be run for you after the files have been
+generated, you can pass the `--install` or `-i` option to the generate command.
+
+```
+railspack generate --install
+```
+
+or
+
+```
+railspack generate -i
+```
+
 Take a look at the [Generated Files Guide](docs/generated_files.md) page to see
 a full description of all the files that are generated.
 
